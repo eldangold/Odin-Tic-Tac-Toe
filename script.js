@@ -129,9 +129,6 @@ const GameController = (function () {
   const playGame = () => {
     render();
     computerMove();
-    if (determineWinner == 2) {
-      console.log("!!");
-    }
   };
 
   return { playGame };
