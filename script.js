@@ -7,6 +7,20 @@ const GameBoard = (function () {
   return { getBoard, makeMove };
 })();
 
+const displayController = (function () {
+  const render = () => {
+    GameBoard.getBoard().forEach((value, index) => {
+      let cell = document.createElement("div");
+      cell.dataset.index = index;
+      cell.addEventListener("click", GameController.userInput);
+      cell.textContent = value;
+      cell.className = "cell";
+      cells.appendChild(cell);
+    });
+  };
+  return { render };
+})();
+
 const GameController = (function () {
   userMoveSymbol = "X";
   computerMoveSymbol = "0";
@@ -21,18 +35,6 @@ const GameController = (function () {
       symbol: computerMoveSymbol,
     },
   ];
-
-  const render = () => {
-    GameBoard.getBoard().forEach((value, index) => {
-      let cell = document.createElement("div");
-      cell.dataset.index = index;
-      cell.addEventListener("click", userInput);
-      cell.textContent = value;
-      cell.className = "cell";
-
-      cells.appendChild(cell);
-    });
-  };
 
   const determineWinner = () => {
     if (
@@ -89,16 +91,18 @@ const GameController = (function () {
         GameBoard.getBoard()[6] == computerMoveSymbol)
     ) {
       return 1;
-    } else return 2;
+    } else if (GameBoard.getBoard().every((cell) => cell !== "")) return 2;
+    else return 3;
   };
 
   const displayWinner = () => {
     if (determineWinner() == 0) alert("You win !");
     else if (determineWinner() == 1) alert("You lose!");
+    else if (determineWinner() == 2) alert("It's a tie!");
   };
 
   function computerMove() {
-    if (determineWinner() == 2) {
+    if (determineWinner() == 3) {
       let move = Math.floor(Math.random() * 9);
       while (GameBoard.getBoard()[move]) {
         move = Math.floor(Math.random() * 9);
@@ -113,7 +117,7 @@ const GameController = (function () {
   }
 
   const userInput = (e) => {
-    if (determineWinner() == 2) {
+    if (determineWinner() == 3) {
       document
         .querySelector(`[data-index="${e.target.dataset.index}"]`)
         .removeEventListener("click", userInput);
@@ -127,11 +131,11 @@ const GameController = (function () {
   };
 
   const playGame = () => {
-    render();
+    displayController.render();
     computerMove();
   };
 
-  return { playGame };
+  return { playGame, userInput };
 })();
 
 GameController.playGame();
