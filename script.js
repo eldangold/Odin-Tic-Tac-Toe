@@ -113,6 +113,7 @@ const GameController = (function () {
       GameBoard.getBoard()[move] = computerMoveSymbol;
       document.querySelector(`[data-index="${move}"]`).textContent =
         GameBoard.getBoard()[move];
+      displayWinner();
     } else displayWinner();
   }
 
