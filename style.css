@@ -1,21 +1,32 @@
-html {
-    display: flex;
-    justify-content: center;
-    font-family: sans-serif;
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: sans-serif;
+  min-height: 100dvh;
 }
 #gameboard {
-    display: grid;
-    width: 50vw;
-    height: 50vh;
-    grid-template-columns: repeat(3, 1fr);
-    border: 2px solid black;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(100px, 1fr));
 }
 
 .cell {
-    border: 1px solid black;
-    margin: 5px;
-    font-size: 2em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  aspect-ratio: 1;
+  border: 1px solid black;
+  margin: 5px;
+  font-size: 5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#start-restart {
+  width: 100%;
+  height: 5vh;
+}
+
+#main-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }

@@ -1,10 +1,11 @@
 let cells = document.getElementById("gameboard");
 const GameBoard = (function () {
-  const board = ["", "", "", "", "", "", "", "", ""];
+  let board = ["", "", "", "", "", "", "", "", ""];
 
   const getBoard = () => board;
+  const resetBoard = () => (board = ["", "", "", "", "", "", "", "", ""]);
   const makeMove = (symbol, index) => (board[index] = symbol);
-  return { getBoard, makeMove };
+  return { getBoard, resetBoard, makeMove };
 })();
 
 const displayController = (function () {
@@ -132,6 +133,8 @@ const GameController = (function () {
   };
 
   const playGame = () => {
+    GameBoard.resetBoard();
+    document.getElementById("gameboard").innerHTML = "";
     displayController.render();
     computerMove();
   };
@@ -139,4 +142,6 @@ const GameController = (function () {
   return { playGame, userInput };
 })();
 
-GameController.playGame();
+document
+  .getElementById("start-restart")
+  .addEventListener("click", () => GameController.playGame());
