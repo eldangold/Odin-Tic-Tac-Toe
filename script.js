@@ -124,8 +124,8 @@ const GameController = (function () {
   };
 
   const displayWinner = () => {
-    if (determineWinner() == 0) display.textContent = player1 + " win !";
-    else if (determineWinner() == 1) display.textContent = player2 + " win!";
+    if (determineWinner() == 0) display.textContent = players[0].name + " win !";
+    else if (determineWinner() == 1) display.textContent = players[1].name + " win!";
     else if (determineWinner() == 2) display.textContent = "It's a tie!";
   };
 
@@ -158,13 +158,14 @@ const GameController = (function () {
       e.target.textContent = GameBoard.getBoard()[e.target.dataset.index];
       switchPlayerTurn();
       if (gameMode === 0) computerMove();
+      displayWinner();
     } else displayWinner();
   };
 
   const singlePlayerPlayGame = () => {
     gameMode = 0;
-    player1 = "You";
-    player2 = "Computer";
+    players[0].name = "You";
+    players[1].name = "Computer";
     GameBoard.resetBoard();
     document.getElementById("game-components").innerHTML = "";
     displayController.render();
