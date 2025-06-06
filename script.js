@@ -39,19 +39,24 @@ const GameController = (function () {
   firstPlayerMoveSymbol = "X";
   secondPlayerMoveSymbol = "0";
 
-  player1 = "Player 1";
-  player2 = "Player 2";
-
   const players = [
     {
-      name: player1,
+      name: "Player 1",
       symbol: firstPlayerMoveSymbol,
     },
     {
-      name: player2,
+      name: "Player 2",
       symbol: secondPlayerMoveSymbol,
     },
   ];
+
+  const assignPlayerNames = () => {
+    if (document.getElementById("player1-name").value)
+      players[0].name = document.getElementById("player1-name").value;
+
+    if (document.getElementById("player2-name").value)
+      players[1].name = document.getElementById("player2-name").value;
+  };
 
   const switchPlayerTurn = () => {
     activePlayer = activePlayer === players[0] ? players[1] : players[0];
@@ -170,6 +175,7 @@ const GameController = (function () {
 
   const multiPlayerPlayGame = () => {
     gameMode = 1;
+    assignPlayerNames();
     activePlayer = players[0];
     GameBoard.resetBoard();
     document.getElementById("game-components").innerHTML = "";

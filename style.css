@@ -20,11 +20,6 @@ body {
   justify-content: center;
 }
 
-#start-restart {
-  height: 5vh;
-  font-size: 2em;
-}
-
 #main-container {
   display: flex;
   flex-direction: column;
@@ -44,4 +39,12 @@ body {
   height: 5vh;
   background-color: #b8c8aa;
   font-size: 2em;
+}
+
+button {
+  xwidth: 100%;
+  font-size: 2em;
+  border-style: none;
+  border-radius: 15px;
+  padding: 15px;
 }
