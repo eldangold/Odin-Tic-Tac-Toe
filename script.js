@@ -124,8 +124,10 @@ const GameController = (function () {
   };
 
   const displayWinner = () => {
-    if (determineWinner() == 0) display.textContent = players[0].name + " win !";
-    else if (determineWinner() == 1) display.textContent = players[1].name + " win!";
+    if (determineWinner() == 0)
+      display.textContent = players[0].name + " win !";
+    else if (determineWinner() == 1)
+      display.textContent = players[1].name + " win!";
     else if (determineWinner() == 2) display.textContent = "It's a tie!";
   };
 
@@ -172,6 +174,7 @@ const GameController = (function () {
     displayController.display();
     computerMove();
     activePlayer = players[0];
+    window.scrollTo(0, document.body.scrollHeight);
   };
 
   const multiPlayerPlayGame = () => {
