@@ -8,7 +8,7 @@ const GameBoard = (function () {
 })();
 
 const displayController = (function () {
-  const render = () => {
+  const renderGameboard = () => {
     const gameboard = document.createElement("div");
     gameboard.id = "gameboard";
 
@@ -24,20 +24,23 @@ const displayController = (function () {
     document.getElementById("game-components").appendChild(gameboard);
   };
 
-  const display = () => {
-    const displayElement = document.createElement("div");
-    displayElement.id = "display";
-    document.getElementById("game-components").appendChild(displayElement);
+  const renderDisplay = () => {
+    const display = document.createElement("div");
+    display.id = "display";
+    document.getElementById("game-components").appendChild(display);
   };
-  return { render, display };
+
+  const display = () => document.getElementById("display");
+
+  return { renderGameboard, renderDisplay, display };
 })();
 
 const GameController = (function () {
   let gameMode;
   let activePlayer;
 
-  firstPlayerMoveSymbol = "X";
-  secondPlayerMoveSymbol = "0";
+  let firstPlayerMoveSymbol = "X";
+  let secondPlayerMoveSymbol = "0";
 
   const players = [
     {
@@ -53,15 +56,18 @@ const GameController = (function () {
   const assignPlayerNames = () => {
     if (document.getElementById("player1-name").value)
       players[0].name = document.getElementById("player1-name").value;
+    else players[0].name = "Player 1";
 
     if (document.getElementById("player2-name").value)
       players[1].name = document.getElementById("player2-name").value;
+    else players[1].name = "Player 2";
   };
 
   const switchPlayerTurn = () => {
     activePlayer = activePlayer === players[0] ? players[1] : players[0];
     if (gameMode === 1)
-      display.textContent = "Current player: " + activePlayer.name;
+      displayController.display().textContent =
+        "Current player: " + activePlayer.name;
   };
 
   const determineWinner = () => {
@@ -125,10 +131,11 @@ const GameController = (function () {
 
   const displayWinner = () => {
     if (determineWinner() == 0)
-      display.textContent = players[0].name + " win !";
+      displayController.display().textContent = players[0].name + " win !";
     else if (determineWinner() == 1)
-      display.textContent = players[1].name + " win!";
-    else if (determineWinner() == 2) display.textContent = "It's a tie!";
+      displayController.display().textContent = players[1].name + " win!";
+    else if (determineWinner() == 2)
+      displayController.display().textContent = "It's a tie!";
   };
 
   function computerMove() {
@@ -148,16 +155,13 @@ const GameController = (function () {
     } else displayWinner();
   }
 
-  const userInput = (e) => {
+  const userInput = (cell) => {
     if (determineWinner() == 3) {
       document
-        .querySelector(`[data-index="${e.target.dataset.index}"]`)
+        .querySelector(`[data-index="${cell.target.dataset.index}"]`)
         .removeEventListener("click", userInput);
-      GameBoard.getBoard()[e.target.dataset.index] = activePlayer.symbol;
-      document.querySelector(
-        `[data-index="${e.target.dataset.index}"]`
-      ).textContent = firstPlayerMoveSymbol;
-      e.target.textContent = GameBoard.getBoard()[e.target.dataset.index];
+      GameBoard.makeMove(activePlayer.symbol, cell.target.dataset.index);
+      cell.target.textContent = GameBoard.getBoard()[cell.target.dataset.index];
       switchPlayerTurn();
       if (gameMode === 0) computerMove();
       displayWinner();
@@ -170,8 +174,8 @@ const GameController = (function () {
     players[1].name = "Computer";
     GameBoard.resetBoard();
     document.getElementById("game-components").innerHTML = "";
-    displayController.render();
-    displayController.display();
+    displayController.renderGameboard();
+    displayController.renderDisplay();
     computerMove();
     activePlayer = players[0];
     window.scrollTo(0, document.body.scrollHeight);
@@ -183,8 +187,10 @@ const GameController = (function () {
     activePlayer = players[0];
     GameBoard.resetBoard();
     document.getElementById("game-components").innerHTML = "";
-    displayController.render();
-    displayController.display();
+    displayController.renderGameboard();
+    displayController.renderDisplay();
+    displayController.display().textContent =
+      "Current player: " + activePlayer.name;
   };
 
   return { singlePlayerPlayGame, multiPlayerPlayGame, userInput };
