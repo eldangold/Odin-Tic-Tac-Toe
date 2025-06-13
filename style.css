@@ -1,7 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Rubik+Doodle+Shadow&display=swap");
+@font-face {
+  font-family: "Rubik Doodle Shadow";
+  src: url(res/RubikDoodleShadow-Regular.ttf);
+}
 
 body {
-  background: url(/background.jpg);
+  background: url(/res/background.jpg);
   background-size: cover;
   margin: 0;
   padding: 0;
@@ -52,7 +55,7 @@ body {
   font-size: 2em;
 }
 
-button {
+.game-mode-selector {
   background-color: yellowgreen;
   color: black;
   font-size: 1.75em;
@@ -83,4 +86,38 @@ input {
   border-radius: 15px;
   border-style: none;
   opacity: 0.6;
+  width: 100%;
+  font-size: 0.5em;
+  padding: 5px 0 5px 0;
+  text-align: center;
+}
+
+#multiplayer-modal-dialog {
+  border-style: none;
+  border-radius: 15px;
+  background-color: yellowgreen;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-size: 2.5em;
+  padding: 20px;
+
+  & button {
+    border-style: none;
+    border-radius: 15px;
+    color: white;
+    font-size: 1em;
+    background-color: #20263e;
+    opacity: 0.6;
+    font-weight: normal;
+    font-family: "Rubik Doodle Shadow", system-ui;
+  }
+}
+
+dialog::backdrop {
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(10px);
 }

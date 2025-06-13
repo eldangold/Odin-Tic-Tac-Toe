@@ -182,6 +182,7 @@ const GameController = (function () {
   };
 
   const multiPlayerPlayGame = () => {
+    document.getElementById("multiplayer-modal-dialog").close();
     gameMode = 1;
     assignPlayerNames();
     activePlayer = players[0];
@@ -191,6 +192,7 @@ const GameController = (function () {
     displayController.renderDisplay();
     displayController.display().textContent =
       "Current player: " + activePlayer.name;
+    window.scrollTo(0, document.body.scrollHeight);
   };
 
   return { singlePlayerPlayGame, multiPlayerPlayGame, userInput };
@@ -201,5 +203,20 @@ document
   .addEventListener("click", () => GameController.singlePlayerPlayGame());
 
 document
-  .getElementById("start-restart-multiplayer")
-  .addEventListener("click", () => GameController.multiPlayerPlayGame());
+  .getElementById("multiplayer-modal-open")
+  .addEventListener("click", () =>
+    document.getElementById("multiplayer-modal-dialog").showModal()
+  );
+
+document
+  .getElementById("multiplayer-modal-close")
+  .addEventListener("click", () =>
+    document.getElementById("multiplayer-modal-dialog").close()
+  );
+
+document
+  .getElementById("multiplayer-name-input-form")
+  .addEventListener("submit", (event) => {
+    event.preventDefault();
+    GameController.multiPlayerPlayGame();
+  });

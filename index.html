@@ -10,18 +10,26 @@
   <body>
     <h1>Tic Tac Toe</h1>
     <div id="main-container">
-      <button id="start-restart-singleplayer">
+      <button id="start-restart-singleplayer" class="game-mode-selector">
         Start/Restart Singleplayer
       </button>
-      <button id="start-restart-multiplayer">Start/Restart Multiplayer</button>
-      <label for="player1-name">
-        Player 1
-        <input type="text" name="player1-name" id="player1-name" />
-      </label>
-      <label for="player2-name">
-        Player 2
-        <input type="text" name="player2-name" id="player2-name" />
-      </label>
+      <button id="multiplayer-modal-open" class="game-mode-selector">
+        Start/Restart Multiplayer
+      </button>
+      <dialog id="multiplayer-modal-dialog">
+        <form id="multiplayer-name-input-form">
+          <label for="player1-name">
+            Player's 1 name
+            <input type="text" name="player1-name" id="player1-name" />
+          </label>
+          <label for="player2-name">
+            Player's 2 name
+            <input type="text" name="player2-name" id="player2-name" />
+          </label>
+          <button type="submit" id="start-restart-multiplayer">Start</button>
+          <button type="reset" id="multiplayer-modal-close">Cancel</button>
+        </form>
+      </dialog>
       <div id="game-components"></div>
     </div>
     <footer>Designed and coded by Eldan Gold © 2025</footer>
